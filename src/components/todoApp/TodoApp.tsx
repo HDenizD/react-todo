@@ -43,7 +43,7 @@ export function TodoApp() {
   }
 
   return (
-    <div className='max-w-96 w-96'>
+    <div className='max-w-96'>
       <AddItem addTodo={addTodo} />
       <h1 className='text-2xl font-bold mt-4'>Todo List</h1>
       {todos.length === 0 && 'No todos yet'}
