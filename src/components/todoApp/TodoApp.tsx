@@ -3,6 +3,7 @@ import {
   fetchTodosFromJsonPlaceholder,
   createTodoInJsonPlaceholder,
   type Todo,
+  deleteTodoFromJsonPlaceholder,
 } from './../../api/todos'
 import { AddItem } from './AddItem'
 import { List } from './List'
@@ -21,7 +22,8 @@ export function TodoApp() {
 
   async function addTodo(item: Todo) {
     createTodoInJsonPlaceholder(item)
-      .then((res) => {
+      .then((res: Todo) => {
+        res.id = crypto.getRandomValues(new Uint32Array(1))[0]
         setTodos((prev) => [res, ...prev])
       })
       .catch((err) => {
@@ -31,19 +33,24 @@ export function TodoApp() {
 
   function deleteTodo(id: Todo['id']) {
     console.log(id)
-    // Delete a todo from the server
+    deleteTodoFromJsonPlaceholder(id)
+      .then(() => {
+        setTodos((prev) => prev.filter((todo) => todo.id !== id))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
-  // function updateTodo() {
-  //   // Update a todo on the server
-  // }
-
-  // getTodos()
-
   return (
-    <div className='w-96'>
+    <div className='max-w-96 w-96'>
       <AddItem addTodo={addTodo} />
-      <List todoList={todos} />
+      <h1 className='text-2xl font-bold mt-4'>Todo List</h1>
+      {todos.length === 0 && 'No todos yet'}
+      <List
+        todoList={todos}
+        deleteTodo={deleteTodo}
+      />
     </div>
   )
 }
