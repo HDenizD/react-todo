@@ -1,7 +1,12 @@
 import './App.css'
+import { TodoApp } from './components/todoApp/TodoApp'
 
 function App() {
-  return <>App Content</>
+  return (
+    <>
+      <TodoApp />
+    </>
+  )
 }
 
 export default App

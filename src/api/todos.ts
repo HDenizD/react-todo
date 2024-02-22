@@ -1,4 +1,4 @@
-type Todo = {
+export type Todo = {
   userId: number
   id: number
   title: string
@@ -8,7 +8,7 @@ type Todo = {
 const API_URL = 'https://jsonplaceholder.typicode.com/todos'
 
 // Create
-export async function createTodo(todo: Partial<Todo>) {
+export async function createTodoInJsonPlaceholder(todo: Partial<Todo>) {
   const response = await fetch(API_URL, {
     method: 'POST',
     body: JSON.stringify(todo),
@@ -20,14 +20,17 @@ export async function createTodo(todo: Partial<Todo>) {
 }
 
 // Read
-export async function getTodos(): Promise<Todo[]> {
+export async function fetchTodosFromJsonPlaceholder(): Promise<Todo[]> {
   const response = await fetch(API_URL)
   const todos = await response.json()
   return todos.slice(0, 10)
 }
 
 // Update
-export async function updateTodo(id: number, updatedTodo: Partial<Todo>) {
+export async function updateTodoFromJsonPlaceholder(
+  id: number,
+  updatedTodo: Partial<Todo>
+) {
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'PUT',
     body: JSON.stringify(updatedTodo),
@@ -39,7 +42,9 @@ export async function updateTodo(id: number, updatedTodo: Partial<Todo>) {
 }
 
 // Delete
-export async function deleteTodo(id: number): Promise<boolean> {
+export async function deleteTodoFromJsonPlaceholder(
+  id: number
+): Promise<boolean> {
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'DELETE',
   })
