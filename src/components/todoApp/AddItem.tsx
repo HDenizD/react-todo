@@ -1,11 +1,7 @@
 import { useState } from 'react'
 import type { Todo } from './../../api/todos'
 
-export function AddItem({
-  addTodo,
-}: {
-  addTodo: (item: Todo) => Promise<Todo>
-}) {
+export function AddItem({ addTodo }: { addTodo: (item: Todo) => void }) {
   const [todoItem, setTodoItem] = useState('')
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {

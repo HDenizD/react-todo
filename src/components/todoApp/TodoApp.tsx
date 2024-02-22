@@ -5,6 +5,7 @@ import {
   type Todo,
 } from './../../api/todos'
 import { AddItem } from './AddItem'
+import { List } from './List'
 
 export function TodoApp() {
   const [todos, setTodos] = useState<Todo[]>([])
@@ -18,11 +19,14 @@ export function TodoApp() {
     setTodos(todos)
   }
 
-  async function addTodo(item: Todo): Promise<Todo> {
-    // Add a new todo to the server
-    const res = await createTodoInJsonPlaceholder(item)
-    console.log(res)
-    return res
+  async function addTodo(item: Todo) {
+    createTodoInJsonPlaceholder(item)
+      .then((res) => {
+        setTodos((prev) => [res, ...prev])
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   function deleteTodo(id: Todo['id']) {
@@ -39,7 +43,7 @@ export function TodoApp() {
   return (
     <div className='w-96'>
       <AddItem addTodo={addTodo} />
-      <h1>Todo App</h1>
+      <List todoList={todos} />
     </div>
   )
 }
