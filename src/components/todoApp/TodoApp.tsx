@@ -17,7 +17,7 @@ export function TodoApp() {
 
   async function getTodos() {
     const todos = await fetchTodosFromJsonPlaceholder()
-    setTodos(todos)
+    setTodos(todos.map((todo) => ({ ...todo, isEditMode: false })))
   }
 
   async function addTodo(item: Todo) {
@@ -32,7 +32,7 @@ export function TodoApp() {
   }
 
   function deleteTodo(id: Todo['id']) {
-    console.log(id)
+    if (!id) return
     deleteTodoFromJsonPlaceholder(id)
       .then(() => {
         setTodos((prev) => prev.filter((todo) => todo.id !== id))
@@ -40,6 +40,30 @@ export function TodoApp() {
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  function toggleEditMode(id: Todo['id']) {
+    setTodos((prev) =>
+      prev.map((todo) => {
+        todo.isEditMode = false
+        if (todo.id === id) {
+          todo.isEditMode = !todo.isEditMode
+        }
+        return todo
+      })
+    )
+  }
+
+  function toggleTodoCompleted(id: Todo['id']) {
+    setTodos((prev) =>
+      prev.map((todo) => {
+        if (todo.id === id) {
+          console.log(id, todo.completed)
+          todo.completed = !todo.completed
+        }
+        return todo
+      })
+    )
   }
 
   return (
@@ -50,6 +74,8 @@ export function TodoApp() {
       <List
         todoList={todos}
         deleteTodo={deleteTodo}
+        toggleTodoCompleted={toggleTodoCompleted}
+        toggleEditMode={toggleEditMode}
       />
     </div>
   )

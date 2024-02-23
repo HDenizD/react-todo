@@ -1,8 +1,9 @@
 export type Todo = {
-  userId: number
-  id: number
-  title: string
-  completed: boolean
+  userId: number | undefined
+  id: number | undefined
+  title: string | undefined
+  completed: boolean | undefined
+  isEditMode?: boolean | undefined
 }
 
 const API_URL = 'https://jsonplaceholder.typicode.com/todos'

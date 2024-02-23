@@ -8,10 +8,11 @@ export function AddItem({ addTodo }: { addTodo: (item: Todo) => void }) {
     e.preventDefault()
     if (!todoItem) return
     const newItem = {
-      userId: 1,
-      id: 1,
+      userId: undefined,
+      id: undefined,
       title: todoItem,
       completed: false,
+      isEditMode: false,
     }
     addTodo(newItem)
   }
