@@ -1,4 +1,5 @@
 import { Todo } from '../../api/todos'
+import { useEffect, useMemo, useState } from 'react'
 
 export function ListItem({
   item,
@@ -11,26 +12,27 @@ export function ListItem({
   let editModeDebounceCounter = 0
   let intervalTimer: number
 
+  const [isEditMode, setIsEditMode] = useState<boolean>(false)
+
   function toggleEditModeDebouncer() {
     editModeDebounceCounter = 0
     intervalTimer = setInterval(() => {
       editModeDebounceCounter++
       if (editModeDebounceCounter === timerMaxCount) {
-        console.log('Edit ON!')
+        setIsEditMode(true)
         clearInterval(intervalTimer)
         return
       }
     }, 1000)
-
     if (editModeDebounceCounter >= timerMaxCount) {
       clearInterval(intervalTimer)
       return
     }
   }
 
-  function abortToggleEditModeDebouncer() {
+  function strikeTodoAndAbortToggleEditModeDebouncer() {
     clearInterval(intervalTimer)
-    if (editModeDebounceCounter < timerMaxCount) {
+    if (!isEditMode && editModeDebounceCounter < timerMaxCount) {
       return console.log('strike')
     }
   }
@@ -38,12 +40,9 @@ export function ListItem({
   return (
     <li
       className='flex break-words gap-3 justify-between p-3 outline outline-1 first-of-type:rounded-t last-of-type:rounded-b hover:bg-zinc-800 cursor-pointer items-center'
-      onMouseDown={() => {
-        toggleEditModeDebouncer()
-      }}
-      onMouseUp={() => {
-        abortToggleEditModeDebouncer()
-      }}
+      onMouseDown={() => toggleEditModeDebouncer()}
+      onMouseUp={() => strikeTodoAndAbortToggleEditModeDebouncer()}
+      onMouseLeave={() => strikeTodoAndAbortToggleEditModeDebouncer()}
     >
       <span className='break-all select-none'> {item.title}</span>
       <button
