@@ -12,10 +12,7 @@ export function ListItem({
   let intervalTimer: number
 
   function toggleEditModeDebouncer() {
-    if (editModeDebounceCounter >= timerMaxCount) {
-      clearInterval(intervalTimer)
-      return
-    }
+    editModeDebounceCounter = 0
     intervalTimer = setInterval(() => {
       editModeDebounceCounter++
       if (editModeDebounceCounter === timerMaxCount) {
@@ -24,13 +21,18 @@ export function ListItem({
         return
       }
     }, 1000)
+
+    if (editModeDebounceCounter >= timerMaxCount) {
+      clearInterval(intervalTimer)
+      return
+    }
   }
 
   function abortToggleEditModeDebouncer() {
-    console.log('Edit OFF!')
     clearInterval(intervalTimer)
-    editModeDebounceCounter = 0
-    return
+    if (editModeDebounceCounter < timerMaxCount) {
+      return console.log('strike')
+    }
   }
 
   return (
