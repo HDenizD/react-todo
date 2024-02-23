@@ -7,17 +7,18 @@ export function ListItem({
   item: Todo
   deleteTodo: (id: Todo['id']) => void
 }) {
+  const timerMaxCount = 1
   let editModeDebounceCounter = 0
   let intervalTimer: number
 
   function toggleEditModeDebouncer() {
-    if (editModeDebounceCounter >= 1) {
+    if (editModeDebounceCounter >= timerMaxCount) {
       clearInterval(intervalTimer)
       return
     }
     intervalTimer = setInterval(() => {
       editModeDebounceCounter++
-      if (editModeDebounceCounter === 1) {
+      if (editModeDebounceCounter === timerMaxCount) {
         console.log('Edit ON!')
         clearInterval(intervalTimer)
         return
