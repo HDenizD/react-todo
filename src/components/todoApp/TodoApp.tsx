@@ -20,11 +20,12 @@ export function TodoApp() {
     setTodos(todos.map((todo) => ({ ...todo, isEditMode: false })))
   }
 
-  async function addTodo(item: Todo) {
+  function addTodo(item: Todo) {
     createTodoInJsonPlaceholder(item)
       .then((res: Todo) => {
         res.id = crypto.getRandomValues(new Uint32Array(1))[0]
         setTodos((prev) => [res, ...prev])
+        // console.log(todos)
       })
       .catch((err) => {
         console.log(err)
@@ -58,7 +59,6 @@ export function TodoApp() {
     setTodos((prev) =>
       prev.map((todo) => {
         if (todo.id === id) {
-          console.log(id, todo.completed)
           todo.completed = !todo.completed
         }
         return todo

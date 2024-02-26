@@ -35,7 +35,6 @@ export function ListItem({
     clearInterval(intervalTimer)
     if (!item.isEditMode && editModeDebounceCounter < timerMaxCount) {
       toggleTodoCompleted(item.id)
-      return console.log('strike')
     }
   }
 
