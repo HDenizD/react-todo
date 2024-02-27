@@ -8,7 +8,7 @@ export function ListItem({
 }: {
   item: Todo
   deleteTodo: (id: Todo['id']) => void
-  toggleTodoCompleted: (id: Todo['id']) => void
+  toggleTodoCompleted: (id: Todo['id'], toState: Todo['completed']) => void
   toggleEditMode: (id: Todo['id']) => void
 }) {
   const timerMaxCount = 1
@@ -34,7 +34,9 @@ export function ListItem({
   function strikeTodoAndAbortToggleEditModeDebouncer() {
     clearInterval(intervalTimer)
     if (!item.isEditMode && editModeDebounceCounter < timerMaxCount) {
-      toggleTodoCompleted(item.id)
+      item.completed
+        ? toggleTodoCompleted(item.id, false)
+        : toggleTodoCompleted(item.id, true)
     }
   }
 
@@ -46,6 +48,9 @@ export function ListItem({
         } ${!item.isEditMode && 'hover:bg-zinc-800'} `}
       onMouseDown={() => toggleEditModeDebouncer()}
       onMouseUp={() => strikeTodoAndAbortToggleEditModeDebouncer()}
+      onKeyDown={(e) => {
+        e.key === 'Enter' && console.log('Save Changed Todo')
+      }}
     >
       {item.isEditMode ? (
         <input className='p-1'></input>

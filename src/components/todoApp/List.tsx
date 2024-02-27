@@ -9,7 +9,7 @@ export function List({
 }: {
   todoList: Todo[]
   deleteTodo: (id: Todo['id']) => void
-  toggleTodoCompleted: (id: Todo['id']) => void
+  toggleTodoCompleted: (id: Todo['id'], toState: Todo['completed']) => void
   toggleEditMode: (id: Todo['id']) => void
 }) {
   return (

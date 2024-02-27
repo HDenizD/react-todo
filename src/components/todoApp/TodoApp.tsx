@@ -55,11 +55,11 @@ export function TodoApp() {
     )
   }
 
-  function toggleTodoCompleted(id: Todo['id']) {
+  function toggleTodoCompleted(id: Todo['id'], toState: Todo['completed']) {
     setTodos((prev) =>
       prev.map((todo) => {
         if (todo.id === id) {
-          todo.completed = !todo.completed
+          todo.completed = toState
         }
         return todo
       })
