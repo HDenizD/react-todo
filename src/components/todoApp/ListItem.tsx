@@ -43,7 +43,7 @@ export function ListItem({
   return (
     <li
       className={`
-        flex break-words gap-3 justify-between p-3 outline outline-1 first-of-type:rounded-t last-of-type:rounded-b  cursor-pointer items-center ${
+        flex break-words gap-3 justify-between p-3 outline outline-1 first-of-type:rounded-t last-of-type:rounded-b cursor-pointer items-center ${
           item.isEditMode && 'bg-yellow-400 text-black'
         } ${!item.isEditMode && 'hover:bg-zinc-800'} `}
       onMouseDown={() => toggleEditModeDebouncer()}
