@@ -2,17 +2,16 @@ import { createContext } from 'react'
 import type { Todo } from './../api/todos'
 
 export const TodoContext = createContext({
-  todos: [],
-  add: (title: Todo['title']) => {
-    console.log('add')
+  addTodo: (title: Todo['title']) => {
+    console.log('add', title)
   },
-  delete: (id: Todo['id']) => {
-    console.log('delete')
+  deleteTodo: (id: Todo['id']) => {
+    console.log('delete', id)
   },
-  edit: (id: Todo['id'], title: Todo['title']) => {
-    console.log('edit')
+  editTodo: (id: Todo['id'], title: Todo['title']) => {
+    console.log('edit', id, title)
   },
-  toggleCompleted: (id: Todo['id']) => {
-    console.log('toggleCompleted')
+  toggleCompletedTodo: (id: Todo['id']) => {
+    console.log('toggleCompleted', id)
   },
 })

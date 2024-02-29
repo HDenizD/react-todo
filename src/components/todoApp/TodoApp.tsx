@@ -1,4 +1,8 @@
 import { createContext, useEffect, useState } from 'react'
+import { List } from './List'
+
+import { useContext } from 'react'
+import { TodoContext } from '../../context/TodoContext'
 
 import type { Todo } from '../../api/todos'
 import {
@@ -8,10 +12,11 @@ import {
   updateTodoFromJsonPlaceholder,
 } from './../../api/todos'
 
-export const TodoContext = createContext({})
-
 export function TodoApp() {
   const [todos, setTodos] = useState<Todo[]>([])
+
+  const { addTodo, deleteTodo, editTodo, toggleCompletedTodo } =
+    useContext(TodoContext)
 
   useEffect(() => {
     fetchTodosFromJsonPlaceholder().then((todos) => {
@@ -19,31 +24,18 @@ export function TodoApp() {
     })
   }, [])
 
-  function addTodo(title: Todo['title']) {
-    console.log('add', title)
-  }
-  function deleteTodo(id: Todo['id']) {
-    console.log('delete', id)
-  }
-  function editTodo(id: Todo['id'], title: Todo['title']) {
-    console.log('edit', id, title)
-  }
-  function toggleCompletedTodo(id: Todo['id']) {
-    console.log('toggleCompleted', id)
-  }
-
   return (
     <TodoContext.Provider
       value={{
-        todos,
-        add: addTodo,
-        delete: deleteTodo,
-        edit: editTodo,
-        toggleCompleted: toggleCompletedTodo,
+        addTodo,
+        deleteTodo,
+        editTodo,
+        toggleCompletedTodo,
       }}
     >
       <div className='max-w-96'>
         <h1 className='text-2xl font-bold mt-4'>Todo List</h1>
+        <List todos={todos} />
       </div>
     </TodoContext.Provider>
   )
