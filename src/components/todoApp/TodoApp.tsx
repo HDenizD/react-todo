@@ -1,26 +1,27 @@
-import { createContext, useEffect, useState } from 'react'
+import { useReducer, useEffect } from 'react'
 import { List } from './List'
 
 import { useContext } from 'react'
 import { TodoContext } from '../../context/TodoContext'
+import { reducer } from './../../store/TodoReducer'
 
-import type { Todo } from '../../api/todos'
 import {
+  type Todo,
   fetchTodosFromJsonPlaceholder,
-  createTodoInJsonPlaceholder,
-  deleteTodoFromJsonPlaceholder,
-  updateTodoFromJsonPlaceholder,
+  // createTodoInJsonPlaceholder,
+  // deleteTodoFromJsonPlaceholder,
+  // updateTodoFromJsonPlaceholder,
 } from './../../api/todos'
 
 export function TodoApp() {
-  const [todos, setTodos] = useState<Todo[]>([])
+  const [todosState, dispatch] = useReducer(reducer, [])
 
   const { addTodo, deleteTodo, editTodo, toggleCompletedTodo } =
     useContext(TodoContext)
 
   useEffect(() => {
-    fetchTodosFromJsonPlaceholder().then((todos) => {
-      setTodos(todos)
+    fetchTodosFromJsonPlaceholder().then((todos: Todo[]) => {
+      dispatch({ type: 'SET_TODOS', payload: todos })
     })
   }, [])
 
@@ -35,7 +36,7 @@ export function TodoApp() {
     >
       <div className='max-w-96'>
         <h1 className='text-2xl font-bold mt-4'>Todo List</h1>
-        <List todos={todos} />
+        <List todos={todosState} />
       </div>
     </TodoContext.Provider>
   )
