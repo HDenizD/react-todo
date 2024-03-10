@@ -1,10 +1,9 @@
 import type { Todo } from '../../api/todos'
-import { useReducer } from 'react'
-
-import { reducer } from '../../store/TodoReducer'
+import { useContext } from 'react'
+import { TodoContext } from './TodoApp'
 
 export function ListItem({ todoItem }: { todoItem: Todo }) {
-  const [todosState, dispatch] = useReducer(reducer, [])
+  const { dispatch } = useContext(TodoContext)
 
   const toggleCompletedTodo = (id: number) => {
     dispatch({ type: 'TOGGLE_COMPLETED_TODO', payload: id })

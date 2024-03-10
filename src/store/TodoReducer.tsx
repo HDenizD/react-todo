@@ -1,6 +1,6 @@
 import type { Todo } from '../api/todos'
 
-type ActionType = {
+export type ActionType = {
   type: keyof typeof actionTypes
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload: any
@@ -29,7 +29,6 @@ export function reducer(todos: Todo[], action: ActionType) {
           : todo
       )
     case 'TOGGLE_COMPLETED_TODO':
-      console.log('action.payload', action.payload)
       return todos.map((todo) =>
         todo.id === action.payload
           ? { ...todo, completed: !todo.completed }
