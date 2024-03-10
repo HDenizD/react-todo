@@ -1,6 +1,3 @@
-// import { ListItem } from './ListItem'
-import { useContext } from 'react'
-import { TodoContext } from './TodoApp'
 import { Todo } from '../../api/todos'
 import { ListItem } from './ListItem'
 

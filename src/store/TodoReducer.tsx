@@ -29,6 +29,7 @@ export function reducer(todos: Todo[], action: ActionType) {
           : todo
       )
     case 'TOGGLE_COMPLETED_TODO':
+      console.log('action.payload', action.payload)
       return todos.map((todo) =>
         todo.id === action.payload
           ? { ...todo, completed: !todo.completed }
